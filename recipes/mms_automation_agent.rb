@@ -74,6 +74,7 @@ template '/etc/mongodb-mms/automation-agent.config' do
     :api_key => api_key,
     :config => node['mongodb3']['config']['mms']
   )
+  sensitive true
 end
 
 # Start the mms automation agent

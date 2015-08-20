@@ -70,6 +70,7 @@ template '/etc/mongodb-mms/monitoring-agent.config' do
   variables(
     :api_key => api_key
   )
+  sensitive true
 end
 
 # Start the mms automation agent
