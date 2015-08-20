@@ -66,6 +66,7 @@ template '/etc/mongodb-mms/monitoring-agent.config' do
   variables(
       :config => node['mongodb3']['config']['mms']
   )
+  sensitive true
 end
 
 # Start the mms automation agent
