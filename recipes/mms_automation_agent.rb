@@ -17,6 +17,15 @@
 # limitations under the License.
 #
 
+if node['mongodb3']['mms']['databag']['name'] && node['mongodb3']['mms']['databag']['item']
+  name = node['mongodb3']['mms']['databag']['name']
+  item = node['mongodb3']['mms']['databag']['item']
+  data_bag_item = Chef::EncryptedDataBagItem.load(name, item)
+  api_key = data_bag_item['mms_api_key']
+else
+  api_key = node['mongodb3']['config']['mms']['mmsApiKey']
+end
+
 # Install curl
 package 'curl' do
   action :install
@@ -62,7 +71,8 @@ template '/etc/mongodb-mms/automation-agent.config' do
   owner node['mongodb3']['user']
   group node['mongodb3']['group']
   variables(
-      :config => node['mongodb3']['config']['mms']
+    :api_key => api_key,
+    :config => node['mongodb3']['config']['mms']
   )
 end
 

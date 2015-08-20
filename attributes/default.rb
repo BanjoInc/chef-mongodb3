@@ -253,3 +253,6 @@ default['mongodb3']['config']['mms']['logLevel'] = 'INFO'
 default['mongodb3']['config']['mms']['maxLogFiles'] = 10
 default['mongodb3']['config']['mms']['maxLogFileSize'] = 268435456
 default['mongodb3']['config']['mms']['httpProxy'] = nil
+
+default['mongodb3']['mms']['databag']['name'] = nil
+default['mongodb3']['mms']['databag']['item'] = nil

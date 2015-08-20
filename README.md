@@ -6,7 +6,7 @@ Install and configure the MongoDB 3
 
 * Install and configure the mongod (or configure the config server for shard cluster)
 * Install and configure the mongos
- * Also, mongos configure the mongos service with runit : `service mongos start|stop|restart|status` 
+ * Also, mongos configure the mongos service with runit : `service mongos start|stop|restart|status`
 * Install the MMS Automation Agent
 * Install the MMS Monitoring Agent
 
@@ -311,6 +311,15 @@ default['mongodb3']['config']['mms']['maxLogFiles'] = 10
 default['mongodb3']['config']['mms']['maxLogFileSize'] = 268435456
 default['mongodb3']['config']['mms']['httpProxy'] = nil
 
+```
+
+#### MMS API key in an encrypted data bag
+
+Optional, the MMS API key can be loaded from an encrypted data bag instead of `node['mongodb3']['config']['mms']['mmsApiKey']`
+
+```
+default['mongodb3']['mms']['databag']['name'] = nil
+default['mongodb3']['mms']['databag']['item'] = nil
 ```
 
 ## Usage
@@ -681,6 +690,15 @@ You can set the config attribute on node or wrapper recipe.
 
 ```
 
+#### Encrypted data bag
+
+```
+{
+  "id": "mms_key",
+  "mms_api_key": "your_api_key_here"
+}
+```
+
 #### Result of `/etc/mongodb-mms/automation-agent.config`
 
 ```text
@@ -768,6 +786,15 @@ You can set the config attribute on node or wrapper recipe.
   }
 }
 
+```
+
+#### Encrypted data bag
+
+```
+{
+  "id": "mms_key",
+  "mms_api_key": "your_api_key_here"
+}
 ```
 
 #### Result of `/etc/mongodb-mms/monitoring-agent.config`
