@@ -75,6 +75,7 @@ template '/etc/mongodb-mms/monitoring-agent.config' do
   variables(
     :config => mms_config
   )
+  sensitive true
 end
 
 # Start the mms automation agent

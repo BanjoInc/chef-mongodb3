@@ -78,6 +78,7 @@ template '/etc/mongodb-mms/automation-agent.config' do
   variables(
     :config => mms_config
   )
+  sensitive true
 end
 
 # Change ownership of data directory to mongo user
