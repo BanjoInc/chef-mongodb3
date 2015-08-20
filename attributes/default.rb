@@ -246,3 +246,7 @@ default['mongodb3']['config']['mms']['krb5Principal'] = nil
 default['mongodb3']['config']['mms']['krb5Keytab'] = nil
 default['mongodb3']['config']['mms']['gsappiServiceName'] = nil
 default['mongodb3']['config']['mms']['enableMunin'] = nil
+
+## Attributes for monitoring agent credentials in an encrypted data bag
+default['mongodb3']['mms']['databag']['name'] = nil
+default['mongodb3']['mms']['databag']['item'] = nil

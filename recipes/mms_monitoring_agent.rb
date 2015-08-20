@@ -17,6 +17,15 @@
 # limitations under the License.
 #
 
+mms_config = node['mongodb3']['config']['mms'].to_h
+
+mms_config['mmsApiKey'] = if node['mongodb3']['mms']['databag']['name'] && node['mongodb3']['mms']['databag']['item']
+                            name = node['mongodb3']['mms']['databag']['name']
+                            item = node['mongodb3']['mms']['databag']['item']
+                            data_bag_item = Chef::EncryptedDataBagItem.load(name, item)
+                            mms_config['mmsApiKey'] = data_bag_item['mms_api_key']
+                          end
+
 # Install curl
 package 'curl' do
   action :install
@@ -64,7 +73,7 @@ template '/etc/mongodb-mms/monitoring-agent.config' do
   owner 'mongodb-mms-agent'
   group 'mongodb-mms-agent'
   variables(
-      :config => node['mongodb3']['config']['mms']
+    :config => mms_config
   )
 end
 
