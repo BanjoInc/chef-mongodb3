@@ -6,7 +6,7 @@
 
 * Install and configure the mongod (or configure the config server for shard cluster)
 * Install and configure the mongos
- * Also, mongos configure the mongos service with runit : `service mongos start|stop|restart|status` 
+ * Also, mongos configure the mongos service with runit : `service mongos start|stop|restart|status`
 * Install and configure the MMS Automation Agent
 * Install and configure the MMS Monitoring Agent
 
@@ -31,6 +31,7 @@
 * Marcin Skurski - [@mskurski](https://github.com/mskurski)
 * Popsikle - [@popsikle](https://github.com/popsikle)
 * Amsdard - [@amsdard](https://github.com/amsdard)
+* Grant Ridder - [@shortdudey123](https://github.com/shortdudey123)
 
 ## Supported Platforms
 

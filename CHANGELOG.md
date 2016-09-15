@@ -1,5 +1,9 @@
 # mongodb3 Cookbook CHANGELOG
 
+## Next
+
+* PR #49 : Test with Chef 12.x
+
 ## 5.3.0
 
 Thank you so much for your huge contribution on this release!
@@ -13,7 +17,7 @@ Thank you so much for your huge contribution on this release!
 * PR #40 : Allow override of the cookbook used for mongos runit templates. Popsikle([@popsikle](https://github.com/popsikle))
 * PR #41 : Create and set ownership of data directory for mms-automation-agent. Amsdard([@amsdard](https://github.com/amsdard))
 * Adding support Ubuntu 15.04 and 16.04 for MMS Automation and Monitoring Agent.
-* Testing in CentOS 6.8. 
+* Testing in CentOS 6.8.
  * 6.6 was missing in bento.
 * No longer support Chef Client version 11.
  * Chef Client version issue related to Custom Resources
@@ -27,7 +31,7 @@ Thank you so much for your huge contribution on this release!
 
 ## 5.1.0
 
-* Feature request #31 : Creating sysLog directory for mongod 
+* Feature request #31 : Creating sysLog directory for mongod
 * Fixing #30 : Changing service provider as `Chef::Provider::Service::Upstart` for ubuntu 14.04
 
 ## 5.0.0
