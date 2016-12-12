@@ -23,7 +23,7 @@ pkg_major_version = node['mongodb3']['version'].to_f # eg. 3.0, 3.2
 pkg_version = node['mongodb3']['version']
 case node['platform_family']
   when 'rhel', 'fedora'
-    pkg_version =  "#{node['mongodb3']['version']}-1.el#{node.platform_version.to_i}" # ~FC019
+    pkg_version =  "#{node['mongodb3']['version']}-1.el#{node['platform_version'].to_i}" # ~FC019
     if node['platform'] == 'amazon'
       pkg_version = "#{node['mongodb3']['version']}-1.amzn1" # ~FC019
     end
