@@ -26,9 +26,9 @@ install_package.each do |pkg|
   package pkg do
     version node['mongodb3']['package']['version']
     case node['platform_family']
-      when 'debian'
-        # bypass dpkg errors about pre-existing init or conf file
-        options '-o Dpkg::Options::="--force-confold" --force-yes'
+    when 'debian'
+      # bypass dpkg errors about pre-existing init or conf file
+      options '-o Dpkg::Options::="--force-confold" --force-yes'
     end
     action :install
   end
@@ -75,9 +75,9 @@ end
 # Update the mongodb config file
 template node['mongodb3']['mongod']['config_file'] do
   source 'mongodb.conf.erb'
-  mode 0644
+  mode '0644'
   variables(
-      :config => node['mongodb3']['config']['mongod']
+    :config => node['mongodb3']['config']['mongod']
   )
   helpers Mongodb3Helper
 end
@@ -90,59 +90,53 @@ cookbook_file '/etc/init.d/disable-transparent-hugepages' do
   group 'root'
   mode '0755'
   action :create
-  only_if {
-    node['mongodb3']['mongod']['disable-transparent-hugepages']
-  }
+  only_if { node['mongodb3']['mongod']['disable-transparent-hugepages'] }
 end
 
 case node['platform']
-  when 'ubuntu'
-    if node['platform_version'].to_f >= 15.04
-      cookbook_file '/lib/systemd/system/disable-transparent-hugepages.service' do
-        source 'disable-transparent-hugepages.service'
-        owner 'root'
-        group 'root'
-        mode '0655'
-        action :create
-        only_if {
-          node['mongodb3']['mongod']['disable-transparent-hugepages']
-        }
-      end
+when 'ubuntu'
+  if node['platform_version'].to_f >= 15.04
+    cookbook_file '/lib/systemd/system/disable-transparent-hugepages.service' do
+      source 'disable-transparent-hugepages.service'
+      owner 'root'
+      group 'root'
+      mode '0655'
+      action :create
+      only_if { node['mongodb3']['mongod']['disable-transparent-hugepages'] }
     end
+  end
 end
 
 service 'disable-transparent-hugepages' do
   case node['platform']
-    when 'ubuntu'
-      if node['platform_version'].to_f >= 15.04
-        provider Chef::Provider::Service::Systemd
-      end
+  when 'ubuntu'
+    if node['platform_version'].to_f >= 15.04
+      provider Chef::Provider::Service::Systemd
+    end
   end
   action [ :enable, :start ]
-  only_if {
-    node['mongodb3']['mongod']['disable-transparent-hugepages']
-  }
+  only_if { node['mongodb3']['mongod']['disable-transparent-hugepages'] }
 end
 
 # Create the mongod.service file
 case node['platform']
-  when 'ubuntu'
-    template '/lib/systemd/system/mongod.service' do
-      source 'mongod.service.erb'
-      mode 0644
-      only_if { node['platform_version'].to_f >= 15.04 }
-    end
+when 'ubuntu'
+  template '/lib/systemd/system/mongod.service' do
+    source 'mongod.service.erb'
+    mode '0644'
+    only_if { node['platform_version'].to_f >= 15.04 }
+  end
 end
 
 # Start the mongod service
 service 'mongod' do
   case node['platform']
-    when 'ubuntu'
-      if node['platform_version'].to_f >= 15.04
-        provider Chef::Provider::Service::Systemd
-      elsif node['platform_version'].to_f >= 14.04
-        provider Chef::Provider::Service::Upstart
-      end
+  when 'ubuntu'
+    if node['platform_version'].to_f >= 15.04
+      provider Chef::Provider::Service::Systemd
+    elsif node['platform_version'].to_f >= 14.04
+      provider Chef::Provider::Service::Upstart
+    end
   end
   supports :start => true, :stop => true, :restart => true, :status => true
   action :enable

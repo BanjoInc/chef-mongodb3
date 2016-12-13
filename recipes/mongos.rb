@@ -39,9 +39,9 @@ end
 template node['mongodb3']['mongos']['config_file'] do
   source 'mongodb.conf.erb'
   owner node['mongodb3']['user']
-  mode 0644
+  mode '0644'
   variables(
-      :config => node['mongodb3']['config']['mongos']
+    :config => node['mongodb3']['config']['mongos']
   )
   helpers Mongodb3Helper
   notifies :restart, 'runit_service[mongos]'
@@ -84,7 +84,7 @@ runit_service 'mongos' do
   restart_on_update true
   cookbook node['mongodb3']['mongos']['runit_template_cookbook']
   options ({
-              :user => node['mongodb3']['user'],
-              :config_file => node['mongodb3']['mongos']['config_file']
-          })
+    :user => node['mongodb3']['user'],
+    :config_file => node['mongodb3']['mongos']['config_file']
+  })
 end

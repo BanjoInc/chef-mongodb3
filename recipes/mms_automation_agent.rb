@@ -24,17 +24,17 @@ end
 
 # Set variables by platform
 case node['platform_family']
-  when 'rhel', 'fedora'
-    mms_agent_source = 'https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager-latest.x86_64.rpm'
-    mms_agent_file = '/root/mongodb-mms-automation-agent-manager-latest.x86_64.rpm'
-  when 'debian'
-    if node['platform'] == 'ubuntu' && node['platform_version'].to_f >= 15.04
-      mms_agent_source = 'https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager_latest_amd64.ubuntu1604.deb'
-      mms_agent_file = '/root/mongodb-mms-automation-agent-manager_latest_amd64.ubuntu1604.deb'
-    else
-      mms_agent_source = 'https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager_latest_amd64.deb'
-      mms_agent_file = '/root/mongodb-mms-automation-agent-manager_latest_amd64.deb'
-    end
+when 'rhel', 'fedora'
+  mms_agent_source = 'https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager-latest.x86_64.rpm'
+  mms_agent_file = '/root/mongodb-mms-automation-agent-manager-latest.x86_64.rpm'
+when 'debian'
+  if node['platform'] == 'ubuntu' && node['platform_version'].to_f >= 15.04
+    mms_agent_source = 'https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager_latest_amd64.ubuntu1604.deb'
+    mms_agent_file = '/root/mongodb-mms-automation-agent-manager_latest_amd64.ubuntu1604.deb'
+  else
+    mms_agent_source = 'https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager_latest_amd64.deb'
+    mms_agent_file = '/root/mongodb-mms-automation-agent-manager_latest_amd64.deb'
+  end
 end
 
 # Download the mms automation agent manager latest
@@ -48,26 +48,26 @@ end
 
 # Install package
 case node['platform_family']
-  when 'rhel', 'fedora'
-    rpm_package 'mongodb-mms-automation-agent-manager' do
-      source mms_agent_file
-      action :install
-    end
-  when 'debian'
-    dpkg_package 'mongodb-mms-automation-agent-manager' do
-      source mms_agent_file
-      action :install
-    end
+when 'rhel', 'fedora'
+  rpm_package 'mongodb-mms-automation-agent-manager' do
+    source mms_agent_file
+    action :install
+  end
+when 'debian'
+  dpkg_package 'mongodb-mms-automation-agent-manager' do
+    source mms_agent_file
+    action :install
+  end
 end
 
 # Create or modify the mms agent config file
 template '/etc/mongodb-mms/automation-agent.config' do
   source 'automation-agent.config.erb'
-  mode 0600
+  mode '0600'
   owner node['mongodb3']['user']
   group node['mongodb3']['group']
   variables(
-      :config => node['mongodb3']['config']['mms']
+    :config => node['mongodb3']['config']['mms']
   )
 end
 

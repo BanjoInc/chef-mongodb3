@@ -32,30 +32,30 @@ default['mongodb3']['package']['version'] = nil
 default['mongodb3']['package']['repo']['url'] = nil
 
 # MongoDB repository info for apt
-default['mongodb3']['package']['repo']['apt']['name'] = nil  # eg. 3.0, 3.2
+default['mongodb3']['package']['repo']['apt']['name'] = nil # eg. 3.0, 3.2
 default['mongodb3']['package']['repo']['apt']['keyserver'] = nil # eg. hkp://keyserver.ubuntu.com:80
 default['mongodb3']['package']['repo']['apt']['key'] = nil # eg. 3.2 : 'EA312927', 3.0 : '7F0CEB10'
 default['mongodb3']['package']['repo']['apt']['components'] = nil # eg. ['multiverse']
 
 # Default attribute for MongoDB installation
 case node['platform_family']
-  when 'rhel', 'fedora'
-    mongo_user = 'mongod'
-    mongo_group = 'mongod'
-    mongo_dbpath = '/var/lib/mongo'
-    # To guarantee the compatibility for centos 6 in previous version of mongodb3 cookbook
-    if node['platform_version'].to_i >= 7
-      mongo_pid_file = '/var/run/mongodb/mongod.pid'
-    else
-      mongo_pid_file = '/var/run/mongodb/mongodb.pid'
-    end
-    config_processManagement_fork = true
-  when 'debian'
-    mongo_user = 'mongodb'
-    mongo_group = 'mongodb'
-    mongo_dbpath = '/var/lib/mongodb'
-    mongo_pid_file = nil
-    config_processManagement_fork = nil
+when 'rhel', 'fedora'
+  mongo_user = 'mongod'
+  mongo_group = 'mongod'
+  mongo_dbpath = '/var/lib/mongo'
+  # To guarantee the compatibility for centos 6 in previous version of mongodb3 cookbook
+  if node['platform_version'].to_i >= 7
+    mongo_pid_file = '/var/run/mongodb/mongod.pid'
+  else
+    mongo_pid_file = '/var/run/mongodb/mongodb.pid'
+  end
+  config_process_management_fork = true
+when 'debian'
+  mongo_user = 'mongodb'
+  mongo_group = 'mongodb'
+  mongo_dbpath = '/var/lib/mongodb'
+  mongo_pid_file = nil
+  config_process_management_fork = nil
 end
 
 # MongoDB user:group
@@ -113,7 +113,7 @@ default['mongodb3']['config']['mongod']['systemLog']['component']['write']['verb
 
 # processManagement Options : http://docs.mongodb.org/manual/reference/configuration-options/#processmanagement-options
 
-default['mongodb3']['config']['mongod']['processManagement']['fork'] = config_processManagement_fork # default : false
+default['mongodb3']['config']['mongod']['processManagement']['fork'] = config_process_management_fork # default : false
 default['mongodb3']['config']['mongod']['processManagement']['pidFilePath'] = mongo_pid_file
 
 # net Options : http://docs.mongodb.org/manual/reference/configuration-options/#net-options
