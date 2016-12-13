@@ -1,11 +1,7 @@
 AllCops:
   DisplayCopNames: true
   Exclude:
-    - 'Berksfile'
-    - 'Thorfile'
     - 'Vagrantfile'
-    - 'Gemfile'
-    - 'metadata.rb'
 
 Lint/LiteralInCondition:
   Enabled: false
