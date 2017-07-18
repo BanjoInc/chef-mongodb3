@@ -23,7 +23,9 @@ mms_config['mmsApiKey'] = if node['mongodb3']['mms']['databag']['name'] && node[
                             name = node['mongodb3']['mms']['databag']['name']
                             item = node['mongodb3']['mms']['databag']['item']
                             data_bag_item = Chef::EncryptedDataBagItem.load(name, item)
-                            mms_config['mmsApiKey'] = data_bag_item['mms_api_key']
+                            node['mongodb3']['mms']['databag']['config_mapping'].each_pair do |key, value|
+                              mms_config[value]  = data_bag_item[key]
+                            end
                           end
 
 # Install curl
