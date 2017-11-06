@@ -23,7 +23,7 @@ pkg_major_version = node['mongodb3']['version'].to_f # eg. 3.0, 3.2
 pkg_version = node['mongodb3']['version']
 case node['platform_family']
   when 'rhel', 'fedora'
-    pkg_version =  "#{node['mongodb3']['version']}-1.el#{node.platform_version.to_i}" # ~FC019
+    pkg_version =  "#{node['mongodb3']['version']}-1.el#{node['platform_version'].to_i}" # ~FC019
     if node['platform'] == 'amazon'
       pkg_version = "#{node['mongodb3']['version']}-1.amzn1" # ~FC019
     end
@@ -53,34 +53,34 @@ end
 
 # MongoDB package version to install
 if node['mongodb3']['package']['version'].nil?
-  node.set['mongodb3']['package']['version'] = pkg_version
+  node.default['mongodb3']['package']['version'] = pkg_version
 end
 
 # MongoDB package repo url
 if node['mongodb3']['package']['repo']['url'].nil?
-  node.set['mongodb3']['package']['repo']['url'] = pkg_repo
+  node.default['mongodb3']['package']['repo']['url'] = pkg_repo
 end
 
 # MongoDB repository name
 if node['mongodb3']['package']['repo']['apt']['name'].nil?
-  node.set['mongodb3']['package']['repo']['apt']['name'] = pkg_major_version.to_s
+  node.default['mongodb3']['package']['repo']['apt']['name'] = pkg_major_version.to_s
 end
 
 # MongoDB apt keyserver and key
 if node['mongodb3']['package']['repo']['apt']['keyserver'].nil?
-  node.set['mongodb3']['package']['repo']['apt']['keyserver'] = apt_repo_keyserver
+  node.default['mongodb3']['package']['repo']['apt']['keyserver'] = apt_repo_keyserver
 end
 
 if node['mongodb3']['package']['repo']['apt']['key'].nil?
   if pkg_major_version >= 3.2
-    node.set['mongodb3']['package']['repo']['apt']['key'] = 'EA312927'
+    node.default['mongodb3']['package']['repo']['apt']['key'] = 'EA312927'
   else
-    node.set['mongodb3']['package']['repo']['apt']['key'] = '7F0CEB10'
+    node.default['mongodb3']['package']['repo']['apt']['key'] = '7F0CEB10'
   end
 end
 
 if node['mongodb3']['package']['repo']['apt']['components'].nil?
-  node.set['mongodb3']['package']['repo']['apt']['components'] = apt_repo_component
+  node.default['mongodb3']['package']['repo']['apt']['components'] = apt_repo_component
 end
 
 # Add the MongoDB Package repository
